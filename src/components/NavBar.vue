@@ -1,51 +1,62 @@
 <template>
-    <nav class="navmenu">
-      <ul>
-        <router-link to="/" class="nav-link">Home</router-link>  
-        <router-link to="/about" class="nav-link">About</router-link>  
-        <router-link to="/models" class="nav-link">Models</router-link>  
-        <router-link to="/cart" class="nav-link">Cart</router-link>  
-        <router-link to="/admin" class="nav-link">Admin</router-link>  
-        <router-link to="/socials" class="nav-link">Socials</router-link>
-        <router-link to="/contact" class="nav-link">Contact</router-link>
-      </ul>
-    </nav>
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <router-link to="/" class="nav-link">Home</router-link>  
+          </li>
+          <li class="nav-item">
+            <router-link to="/about" class="nav-link">About</router-link>  
+          </li>
+          <li class="nav-item">
+            <router-link to="/socials" class="nav-link">Socials</router-link>
+          </li>
+          <li class="nav-item dropdown">
+            <router-link to="/models" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Models</router-link>  
+            <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="/models">All Models</a></li>
+              <li><a class="dropdown-item" href="/models">Bmw</a></li>
+              <li><a class="dropdown-item" href="#">Polo</a></li>
+              <li><a class="dropdown-item" href="#">Ferrari</a></li>
+              <li><a class="dropdown-item" href="#">Range Rover</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <router-link to="/cart" class="nav-link">Cart</router-link>  
+          </li>
+          <li class="nav-item">
+            <router-link to="/admin" class="nav-link">Admin</router-link>   
+          </li>
+          <li class="nav-item">
+            <router-link to="/contact" class="nav-link">Contact</router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
   </template>
   
   <script>
+  import 'bootstrap/dist/js/bootstrap.bundle';
+
   export default {
     
   }
   </script>
   
   <style scoped>
-  .navmenu ul {
-    display: flex;
-    justify-content: center;
-    gap: 100px;
-  }
-  .navmenu {
-    color: #fff;
-    background: black;
-    height: 100px;
-    padding: 30px;
-  }
-  .nav-link {
-    font-weight: bold;
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s ease; /* Add transition effect */
-  }
   
-  .nav-link:hover {
-    color: #0bb8f1e7; /* Change color on hover */
-  }
-  
-  @media (max-width: 750px) {
-    .nav a {
-      font-size: 100px;
-      text-align: center;
-    }
-  }
   </style>
   

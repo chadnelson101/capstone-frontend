@@ -8,8 +8,6 @@ export default createStore({
     products:[],
     users:[]
   },
-  getters: {
-  },
   mutations: {
     setProducts(state, products) {
       state.products = products
@@ -23,7 +21,6 @@ export default createStore({
       try{
         const response = await axios.get(baseUrl+'/products')
         context.commit('setProducts', response.data)
-        console.log(getProducts.data);
       }catch(error){
         console.error('Error getting products');
       }
@@ -32,27 +29,41 @@ export default createStore({
       try{
         const response = await axios.get(baseUrl+'/users')
         context.commit('setUsers', response.data)
-        console.log(getUsers.data);
       }catch(error){
         console.error('Error getting users');
       }
     },
-    async deleteUser(userid){
+    async addUser({commit},newuser){
+      let {data} = await axios.post(baseUrl+'/users',newuser)
+      alert(data.msg)
+      window.location.reload()
+    },
+    async addProduct({commit},newproduct){
+      let {data} = await axios.post(baseUrl+'/products',newproduct)
+      alert(data.msg)
+      window.location.reload()
+    },
+    async editUser({commit},userid){
+      let {data} = await axios.put(baseUrl+'/users/'+userid)
+      alert(data.msg)
+      window.location.reload()
+    },
+    async deleteUser(context, userid){
       try{
         await axios.delete(baseUrl+'/users/' +userid)
+        await context.dispatch('getUsers');
       }catch(error){
         console.error('Error deleting user');
       }
-      // window.location.reload()
-    }
-    // async deleteProduct(productid){
-    //   try{
-    //     await axios.delete(baseUrl+'/products/' +productid)
-    //   }catch(error){
-    //     console.error('Error deleting product');
-    //   }
-    // }
-
+    },
+    async deleteProduct(context, productid){
+      try{
+        await axios.delete(baseUrl+'/products/' +productid)
+        await context.dispatch('getProducts');
+      }catch(error){
+        console.error('Error deleting product');
+      }
+    },
   },
   modules: {
   }
