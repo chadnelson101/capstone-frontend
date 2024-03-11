@@ -25,7 +25,7 @@ export default {
 
 .animated-text span::before{
     content: "";
-    color: #ffff;
+    color: aqua;
     animation: words 20s infinite;
 }
 

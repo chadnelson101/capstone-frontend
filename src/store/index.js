@@ -39,7 +39,7 @@ export default createStore({
       window.location.reload()
     },
     async addProduct({commit},newproduct){
-      let {data} = await axios.post(baseUrl+'/products',newproduct)
+       await axios.post(baseUrl+'/products',newproduct)
       alert(data.msg)
       window.location.reload()
     },
