@@ -21,47 +21,12 @@
             <td class="word">{{ product.models }}</td>
             <td><img :src="product.producturl" alt=""></td>
             <td><button @click="deleteProduct(product.prodid)" class="btn btn-primary">Delete</button></td>
-            <td><button class="btn btn-primary">Edit</button></td>
+            <td><button class="btn btn-primary"><editProductView/></button></td>
           </tr>
         </tbody>
       </table>
       <br><br>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Add Product
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-        <input type="text" placeholder="productname" class="form-control" data-description name="item name" id="item name" v-model="productname">
-      </div>
-        <div class="mb-3">
-        <input type="number" placeholder="amount" class="form-control" data-description name="item name" id="item name" v-model="amount">
-      </div>
-        <div class="mb-3">
-        <input type="text" placeholder="model" class="form-control" data-description name="item name" id="item name" v-model="model">
-      </div>
-        <div class="mb-3">
-        <input type="text" placeholder="producturl" class="form-control" data-description name="item name" id="item name" v-model="producturl">
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" @click="addProduct">Save chnages</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+      <ProductView/>
       <br><br><br><br><br>
       <h3 class="header">Users</h3>
       <table>
@@ -138,7 +103,13 @@
   </template>
   
   <script>
+  import ProductView from '../components/ProductView.vue';
+  import editProductView from '../components/editProductView.vue';
 export default {
+  components:{
+    ProductView,
+    editProductView
+  },
   data() {
     return {
       firstname:null,
@@ -148,10 +119,6 @@ export default {
       email:null,
       role:null,
       password:null,
-      productname:null,
-      amount:null,
-      model:null,
-      producturl:null
     };
   },
   computed: {
@@ -163,9 +130,6 @@ export default {
     },
     addUser(){
       this.$store.dispatch('addUser',this.$data);
-    },
-    addProduct() {
-      this.$store.dispatch('addProduct',this.$data);
     },
     editUser() {
       this.$store.dispatch('editUser',this.$data);
