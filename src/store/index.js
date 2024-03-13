@@ -71,13 +71,31 @@ export default createStore({
         console.error('Error deleting product');
       }
     },
-    async updateProduct(context, product){
-      await axios.patch(baseUrl+'/products/' +product.id)
-      await context.dispatch('getProducts');
-      alert('product updated successfully')
-      window.location.reload()
-      console.log(product);
-    }
+    saveChanges({ commit }, updateProduct) {
+      console.log(updateProduct);
+      return axios.patch(`${baseUrl}/products/${updateProduct.prodid}`, updateProduct)
+        .then(response => {
+          // Handle successful update if needed
+          return response.data; // Return the updated product data
+        })
+        .catch(error => {
+          console.error('Error updating product:', error);
+          throw error; // Propagate the error to the caller
+        });
+    },
+    editUser({ commit }, updateUser) {
+      console.log(updateUser);
+      return axios.patch(`${baseUrl}/users/${updateUser.userid}`, updateUser)
+        .then(response => {
+          // Handle successful update if needed
+          return response.data; // Return the updated product data
+        })
+        .catch(error => {
+          console.error('Error updating user:', error);
+          throw error; // Propagate the error to the caller
+        });
+    },
+    
     // async login ({commit},logged){
     //   let data = await axios.post(baseUrl+'/login',logged)
     //   $cookies.set('jwt',data.token)

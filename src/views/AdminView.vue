@@ -21,7 +21,7 @@
             <td class="word">{{ product.models }}</td>
             <td><img :src="product.producturl" alt=""></td>
             <td><button @click="deleteProduct(product.prodid)" class="btn btn-primary">Delete</button></td>
-            <td><button class="btn btn-primary"><editProductView/></button></td>
+            <td><editProductView/></td>
           </tr>
         </tbody>
       </table>
@@ -53,7 +53,7 @@
             <td class="word">{{ users.email}}</td>
             <td class="word">{{ users.role }}</td>
             <td><button @click="deleteUser(users.userid)" class="btn btn-primary">Delete</button></td>
-            <td><button class="btn btn-primary">Edit</button></td>
+            <td><editUserView/></td>
           </tr>
         </tbody>
       </table>
@@ -105,10 +105,12 @@
   <script>
   import ProductView from '../components/ProductView.vue';
   import editProductView from '../components/editProductView.vue';
+  import editUserView from '../components/editUserView.vue';
 export default {
   components:{
     ProductView,
-    editProductView
+    editProductView,
+    editUserView
   },
   data() {
     return {
