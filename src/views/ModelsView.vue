@@ -13,18 +13,6 @@
         </div>
       </div>
       </div>
-
-      <div class="product-grid">
-      <div v-for="product in products" :key="product.id" class="product-item">
-        <img :src="product.producturl" alt="Product Image">
-        <h3>{{ product.productName }}</h3>
-        <p class="price">R{{ product.amount }}</p>
-        <div class="details">
-        <button class="buton" @click="addToCart(product.id)">Add to Cart</button>
-        <button class="buton" @click="view(product.id)">view details</button>
-        </div>
-      </div>
-      </div>
     </div>
     </div>
 </template>
@@ -60,7 +48,7 @@
   text-align: center;
   font-size: 40px;
   font-weight: bold;
-  color:rgb(0, 123, 255, 1);
+  color:rgb(58, 89, 122);
   margin-top: 75px;
 }
 .product-grid {
@@ -70,7 +58,7 @@
   .product-item {
     padding: 111px;
     margin: auto;
-    border: 5px solid #00BFFF; 
+    border: 5px solid #435256; 
         border-radius: 10px; 
         pointer-events: none;
         animation: neon-animation 1.5s infinite alternate;
@@ -78,12 +66,12 @@
 
     @keyframes neon-animation {
         from {
-            border-color: #0080FF;
-            box-shadow: 0 0 10px #0080FF, 0 0 20px #0080FF, 0 0 30px #0080FF, 0 0 40px #0080FF; /* Neon glow effect */
+            border-color: #2b353e;
+            box-shadow: 0 0 10px #2c363f, 0 0 20px #4a4e52, 0 0 30px #49525b, 0 0 40px #565d64; /* Neon glow effect */
         }
         to {
-            border-color: #00BFFF; 
-            box-shadow: 0 0 20px #00BFFF, 0 0 30px #00BFFF, 0 0 40px #00BFFF, 0 0 50px #00BFFF; /* Neon glow effect */
+            border-color: #526c75; 
+            box-shadow: 0 0 20px #475052, 0 0 30px #506367, 0 0 40px #5a727b, 0 0 50px #748e93; /* Neon glow effect */
         }
     }
 

@@ -1,13 +1,14 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-
+import {$Cookies} from 'vue-cookies'
 
 const baseUrl = 'https://capstone-backend-3.onrender.com'
 
 export default createStore({
   state: {
     products:[],
-    users:[]
+    users:[],
+    socials:[],
   },
   mutations: {
     setProducts(state, products) {
@@ -15,7 +16,10 @@ export default createStore({
     },
     setUsers(state, users) {
       state.users = users
-    }
+    },
+    setSocials(state, socials) {
+      state.socials = socials
+    },
   },
   actions: {
     async getProducts (context){
@@ -32,6 +36,13 @@ export default createStore({
         context.commit('setUsers', response.data)
       }catch(error){
         console.error('Error getting users');
+      }
+    },
+    async getPosts (context){
+      try{
+        const response = await axios.get(baseUrl+'/post')
+        context.commit('setSocials', response.data)
+      }catch(error){
       }
     },
     async getSinlgeUser (context){
@@ -53,6 +64,25 @@ export default createStore({
       alert('Product added successfully')
       window.location.reload()
     },
+    async addPost ({commit},newpost){
+      console.log(newpost);
+      try{
+        let {data} = await axios.post(baseUrl+'/post',newpost)
+        alert(data.msg)
+      }catch(error){
+        console.error('Error adding post');
+        window.location.reload()
+      }
+    },
+    async deletePost(context,postid){
+      try{
+        await axios.delete(baseUrl+'/post/' +postid)
+        await context.dispatch('getPosts');
+        alert(data.msg)
+      }catch(error){
+        console.error('Error deleting post');
+      }
+    },
     async deleteUser(context, userid){
       try{
         await axios.delete(baseUrl+'/users/' +userid)
@@ -68,7 +98,6 @@ export default createStore({
         await context.dispatch('getProducts');
         alert('Product deleted successfully')
       }catch(error){
-        console.error('Error deleting product');
       }
     },
     saveChanges({ commit }, updateProduct) {
@@ -95,20 +124,32 @@ export default createStore({
           throw error; // Propagate the error to the caller
         });
     },
-    
-    // async login ({commit},logged){
-    //   let data = await axios.post(baseUrl+'/login',logged)
-    //   $cookies.set('jwt',data.token)
-    //   alert(data.msg)
-    //   await router.push('/users')
-    //   window.location.reload()
-    // },
-    // async logout ({context}){
-    //   let cookies = $cookies.keys()
-    //   $cookies.remove('jwt')
-    //   console.log(cookies);
-    //   window.location.reload()
-    // }
+    async editPost ({commit},postid){
+      try{
+        let {data} = await axios.get(baseUrl+'/post/' +postid)
+        alert()
+      }catch(error){
+        console.error('Error editing post');
+      }
+    }, 
+    async login ({ commit }, logged) {
+      try {
+        const response = await axios.post(baseUrl + '/login', logged)
+        $Cookies.set('jwt', response.data.token) // Make sure to access the token from the response
+        alert(response.data.msg)
+        await router.push('/users')
+        window.location.reload()
+      } catch (error) {
+        console.error('Error during login:', error)
+        // Handle error appropriately
+      }
+    },
+    async logout ({context}){
+      let $Cookies = $Cookies.keys()
+      $Cookies.remove('jwt')
+      console.log($Cookies);
+      window.location.reload()
+    }
   },
   modules: {
   }
