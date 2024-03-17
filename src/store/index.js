@@ -132,18 +132,32 @@ export default createStore({
         console.error('Error editing post');
       }
     }, 
-    async login ({ commit }, logged) {
+    async login({ commit }, credentials) {
       try {
-        const response = await axios.post(baseUrl + '/login', logged)
-        $Cookies.set('jwt', response.data.token) // Make sure to access the token from the response
-        alert(response.data.msg)
-        await router.push('/users')
-        window.location.reload()
+        const response = await axios.post(baseUrl + '/login', credentials);
+    
+        if (response.data.token) {
+          // Store the JWT token in session storage
+          sessionStorage.setItem('jwt', response.data.token);
+    
+          alert(response.data.msg);
+    
+          await router.push('/users');
+    
+          // Instead of reloading the entire window, you can trigger a route change
+          // which will refresh the page content while keeping the session storage intact
+          await router.go();
+    
+        } else {
+          alert('Login failed. Please try again.');
+        }
       } catch (error) {
-        console.error('Error during login:', error)
-        // Handle error appropriately
+        console.error('Error during login:', error);
+        alert('Login failed. Please check your credentials.');
       }
     },
+    
+    
     async logout ({context}){
       let $Cookies = $Cookies.keys()
       $Cookies.remove('jwt')

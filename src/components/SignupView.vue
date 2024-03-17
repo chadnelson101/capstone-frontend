@@ -1,68 +1,49 @@
 <template>
-	<div>
-	<img src="https://img.gta5-mods.com/q95/images/bmw-m4-gts-liberty-walk/cdd8ce-20211226231806_1.jpg" alt="">
-</div>
-	<div>
-		<div class="wrapper">
-			<div class="card-switch">
-				<label class="switch">
-				   <input type="checkbox" class="toggle">
-				   <span class="slider"></span>
-				   <span class="card-side"></span>
-				   <div class="flip-card__inner">
-					  <div class="flip-card__front">
-						 <div class="title">Log in</div>
-						 <form @submit.prevent='' class="flip-card__form" action="">
-							<input class="flip-card__input" name="email" placeholder="email" type="email" v-model="email">
-							<input class="flip-card__input" name="password" placeholder="Password" type="password" v-model="password">
-						   <p></p>
-							<button @click="log" class="flip-card__btn">Login</button>
-						 </form>
-					  </div>
-					  <div class="flip-card__back">
-						 <div class="title">Sign up</div>
-						 <form @submit.prevent='' class="flip-card__form" action="">
-							<SignupView/>
-						 </form>
-					  </div>
-				   </div>
-				</label>
-			</div>   
-	   </div>
-	</div>
-	</template>
+    <input class="flip-card__input" placeholder="Firstname" type="username" v-model="firstname"><input class="flip-card__input" name="lastname" placeholder="lastname"  v-model="lastname">
+	<input class="flip-card__input" placeholder="age" type="number" v-model="age">
+    <select class="flip-card__input" name="gender" v-model="gender">
+  <option value="" disabled selected>Gender</option>
+  <option value="male">Male</option>
+  <option value="female">Female</option>
+</select>
+	<input class="flip-card__input" name="email" placeholder="email"  v-model="email">
+    <select class="flip-card__input" name="role" v-model="role">
+  <option value="" disabled selected>Role</option>
+  <option value="admin">Admin</option>
+  <option value="user">User</option>
+</select>
 
-	<script>
-	import SignupView from '../components/SignupView.vue'
+	<input class="flip-card__input" name="password" placeholder="Password" type="password" v-model="password">
+	<button  @click="addUser" class="flip-card__btn" >Sign up</button>
+</template>
 
-	export default {
-		components:{
-			SignupView
-		},
-		data() {
-			return{
+<script>
+    export default {
+        data(){
+            return{
+                firstname:null,
+				lastname:null,
+				age:null,
+				gender:null,
 				email:null,
+				role:null,
 				password:null,
-			}
-		},
-		computed:{
-		  log(){
-			console.log(this.$data);
-			this.$store.dispatch('login',this.$data)
-		  },
+            }
+        },
+        computed:{
+		  addUser(){
+			this.$store.dispatch('addUser', this.$data)
+		  }
 		}
-	}
-	</script>
-	
-	<style scoped>
-	*{
+    }
+</script>
+
+<style scoped>
+*{
 	  margin: 0;
 	  padding: 0;
 	  box-sizing: border-box;
 	}
-	/* .body{
-		height: 100vh;
-	} */
 	img{
 		width: 100%
 	}
@@ -102,7 +83,7 @@
 	  top: 0;
 	  width: 100px;
 	  text-decoration: underline;
-	  color: white;
+	  color: var(--font-color);
 	  font-weight: 600;
 	  top:-3300%;
 	}
@@ -114,7 +95,7 @@
 	  top: 0;
 	  width: 100px;
 	  text-decoration: none;
-	  color:white;
+	  color: var(--font-color);
 	  font-weight: 600;
 	  top:-3300%;
 	}
@@ -239,4 +220,4 @@
 	  color: var(--font-color);
 	  cursor: pointer;
 	} 
-	</style>
+</style>

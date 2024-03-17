@@ -4,6 +4,7 @@ import AdminView from '../views/AdminView.vue'
 import ModelsView from '../views/ModelsView.vue'
 import LoginView from '../views/LoginView.vue'
 import SocialsView from '../views/Socials.View.vue'
+import ProfileView from '../views/ProfileView.vue'
 
 const routes = [
   {
@@ -38,6 +39,11 @@ const routes = [
     path: '/socials',
     name:'socials',
     component: SocialsView
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView
   }
 ]
 

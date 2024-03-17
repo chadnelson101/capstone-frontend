@@ -30,9 +30,10 @@
 <style scoped>
 .body{
   margin: 0 auto;
-  width: 100%;
   height: 100vh;
-  background-color: rgb(35, 26, 26);
+  background-image: url(https://gta5mod.net/wp-content/uploads/2022/02/BMW-M4-GTS-Liberty-Walk3-scaled.webp);
+  background-size: 100% auto; /* Set the background image width to 100% */
+  background-repeat: no-repeat;
 }
 .content{
   width: 50%;
@@ -46,12 +47,15 @@
 }
 .para{
   color: aliceblue;
+  position: relative;
+  top: 20%;
+  left: -20%;
 }
 .header{
   color:aqua;
   position: absolute;
   top:10%;
-  left: 8%;
+  left: 16%;
 }
 
 .card-container {
@@ -70,7 +74,7 @@
     box-sizing: border-box;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
-    border: 5px solid #00BFFF; 
+    border: 5px solid #7a98a2; 
         border-radius: 10px; 
         pointer-events: none;
         animation: neon-animation 1.5s infinite alternate;
@@ -78,12 +82,12 @@
 
     @keyframes neon-animation {
         from {
-            border-color: #0080FF;
-            box-shadow: 0 0 10px #0080FF, 0 0 20px #0080FF, 0 0 30px #0080FF, 0 0 40px #0080FF; /* Neon glow effect */
+            border-color: #a8b4c1;
+            box-shadow: 0 0 10px #6d8296, 0 0 20px #8b99a7, 0 0 30px #475059, 0 0 40px #8698a9; /* Neon glow effect */
         }
         to {
-            border-color: #00BFFF; 
-            box-shadow: 0 0 20px #00BFFF, 0 0 30px #00BFFF, 0 0 40px #00BFFF, 0 0 50px #00BFFF; /* Neon glow effect */
+            border-color: #777b7b; 
+            box-shadow: 0 0 20px #6e838a, 0 0 30px #748c94, 0 0 40px #768c94, 0 0 50px #738991; /* Neon glow effect */
         }
     }
   

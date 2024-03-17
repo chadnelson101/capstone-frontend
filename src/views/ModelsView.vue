@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="body">
       <h1 class="header"> Product Page</h1>
     <div class="product-grid">
@@ -13,7 +12,6 @@
         </div>
       </div>
       </div>
-    </div>
     </div>
 </template>
 
@@ -40,9 +38,9 @@
 
 <style scoped>
 .body{
-  height:auto;
+  height:vh;
   width:100%;
-  background-color: rgb(35, 26, 26);
+  background-color: rgb(72, 73, 73);
 }
 .header{
   text-align: center;
