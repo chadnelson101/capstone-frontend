@@ -1,39 +1,46 @@
 <template>
-    <div class="body">
-      <h1 class="header"> Product Page</h1>
+  <div class="body">
+    <h1 class="header">Product Page</h1>
     <div class="product-grid">
       <div v-for="product in products" :key="product.id" class="product-item">
         <img :src="product.producturl" alt="Product Image">
         <h3>{{ product.productName }}</h3>
         <p class="price">R{{ product.amount }}</p>
         <div class="details">
-        <button class="buton" @click="addToCart(product.id)">Add to Cart</button>
-        <button class="buton" @click="view(product.id)">view details</button>
+          <!-- Pass the cartId to the addToCart method -->
+          <button class="buton" @click="addCart(prodid)">Add to Cart</button>
+          <button class="buton" @click="view(product.id)">View Details</button>
         </div>
       </div>
-      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        computed: {
-      products() { []
-        return this.$store.state.products;
-      }
-    },
-    mounted() {
-      this.$store.dispatch('getProducts');
-    },
-    methods: {
-        addToCart(id) {
-          this.$store.dispatch('addToCart', id);
-        },
-        view(id) {
-          this.$store.dispatch('viewDetails', id);
-        }
+export default {
+  data() {
+    return {
+      userid:'',
+    };
+  },
+  computed: {
+    products() {
+      return this.$store.state.products;
     }
+  },
+  mounted() {
+    this.$store.dispatch('getProducts');
+  },
+  methods: {
+    // Modify the addToCart method to accept the cartId
+    addCart(prodid) {
+      this.$store.dispatch('addToCart', prodid);
+    },
+    view(productId) {
+      // Implement your view method
     }
+  }
+}
 </script>
 
 <style scoped>
@@ -57,9 +64,8 @@
     padding: 111px;
     margin: auto;
     border: 5px solid #435256; 
-        border-radius: 10px; 
-        pointer-events: none;
-        animation: neon-animation 1.5s infinite alternate;
+    border-radius: 10px; 
+    animation: neon-animation 1.5s infinite alternate;
     }
 
     @keyframes neon-animation {
@@ -88,8 +94,7 @@
     justify-content: space-around;
  
   }
-
-  .buton{
+   .buton{
     background-color: rgb(0, 123, 255, 1);
     color: rgb(35, 26, 26);
     border: none;

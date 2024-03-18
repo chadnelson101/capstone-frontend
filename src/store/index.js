@@ -9,6 +9,7 @@ export default createStore({
     products:[],
     users:[],
     socials:[],
+    cart:[],
   },
   mutations: {
     setProducts(state, products) {
@@ -20,6 +21,9 @@ export default createStore({
     setSocials(state, socials) {
       state.socials = socials
     },
+    setCart(state, cart) {
+      state.cart = cart
+    }
   },
   actions: {
     async getProducts (context){
@@ -36,6 +40,15 @@ export default createStore({
         context.commit('setUsers', response.data)
       }catch(error){
         console.error('Error getting users');
+      }
+    },
+    async getCart (context){
+      try{
+        const response = await axios.get(baseUrl+'/cart')
+        console.log(response.data);
+        context.commit('setCart', response.data)
+      }catch(error){
+        console.error('Error getting cart');
       }
     },
     async getPosts (context){
@@ -74,6 +87,30 @@ export default createStore({
         window.location.reload()
       }
     },
+    async addToCart({ commit }, prodid,userid) {
+      try {
+        // Get the user ID from cookies or local storage
+        const userid = $cookies.get('userid');
+        console.log('userid', userid);
+        if (userid) {
+          // Handle case where user ID is not available
+          console.error('User ID not found');
+          return;
+        }
+    
+        // Perform the API call to add the product to the cart
+       let x =  await axios.post(baseUrl + '/cart/' + prodid);
+    console.log(x);
+        // Dispatch the addToCart action with prodid and userId
+        // commit('ADD_TO_CART', { prodid, userid });
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        alert('Error adding item to cart.');
+      }
+    },
+    
+    
+    
     async deletePost(context,postid){
       try{
         await axios.delete(baseUrl+'/post/' +postid)
@@ -99,6 +136,16 @@ export default createStore({
         alert('Product deleted successfully')
       }catch(error){
       }
+    },
+    async deleteCart(context, cartId) { // Change the action name to "deleteCart"
+      try {
+        await axios.delete(baseUrl + '/cart/' + cartId);
+        await context.dispatch('getCart');
+        alert('item deleted successfully');
+      } catch (error) {
+        console.error('Error deleting cart item:', error);
+      }
+      window.location.reload();
     },
     saveChanges({ commit }, updateProduct) {
       console.log(updateProduct);
@@ -136,28 +183,27 @@ export default createStore({
       try {
         const response = await axios.post(baseUrl + '/login', credentials);
     
-        if (response.data.token) {
+        if (response.status === 200 && response.data.token) {
           // Store the JWT token in session storage
-          sessionStorage.setItem('jwt', response.data.token);
+          localStorage.setItem('jwt', response.data.token);
     
           alert(response.data.msg);
     
-          await router.push('/users');
+          // Extract the user ID from the response data
+          const userid = response.data.user;
     
-          // Instead of reloading the entire window, you can trigger a route change
-          // which will refresh the page content while keeping the session storage intact
-          await router.go();
+          // Set the user ID in cookies or local storage for future use
+          await $cookies.set('userid', userid);
+    
+          await router.push('/users');
     
         } else {
           alert('Login failed. Please try again.');
         }
       } catch (error) {
         console.error('Error during login:', error);
-        alert('Login failed. Please check your credentials.');
       }
     },
-    
-    
     async logout ({context}){
       let $Cookies = $Cookies.keys()
       $Cookies.remove('jwt')
