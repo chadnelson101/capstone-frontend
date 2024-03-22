@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 import {$Cookies} from 'vue-cookies'
 
-const baseUrl = 'https://cap-backend-1.onrender.com'
+const baseUrl = 'http://localhost:9000'
 
 export default createStore({
   state: {
@@ -87,30 +87,23 @@ export default createStore({
         window.location.reload()
       }
     },
-    async addToCart({ commit }, prodid,userid) {
+    async addToCart({ commit }, product_id) {
       try {
-        // Get the user ID from cookies or local storage
-        const userid = $cookies.get('userid');
-        console.log('userid', userid);
-        if (userid) {
-          // Handle case where user ID is not available
-          console.error('User ID not found');
-          return;
-        }
-    
-        // Perform the API call to add the product to the cart
-       let x =  await axios.post(baseUrl + '/cart/' + prodid);
-    console.log(x);
-        // Dispatch the addToCart action with prodid and userId
-        // commit('ADD_TO_CART', { prodid, userid });
+          const userid = await $cookies.get('userid');
+          console.log('userid', userid);
+          if (!userid) {
+              console.error('User ID not found');
+              return;
+          }
+          console.log('userid:'+userid, 'product_id'+product_id);
+          const response = await axios.post(baseUrl + `/cart/${product_id}/${userid}`, { product_id, userid,token:localStorage.getItem('jwt') });
+          console.log('Response:', response.data);
+          // Handle the response data as needed
       } catch (error) {
-        console.error('Error adding to cart:', error);
-        alert('Error adding item to cart.');
+          console.error('Error adding to cart:', error);
+          alert('Error adding item to cart.');
       }
-    },
-    
-    
-    
+  },  
     async deletePost(context,postid){
       try{
         await axios.delete(baseUrl+'/post/' +postid)
@@ -188,17 +181,13 @@ export default createStore({
           localStorage.setItem('jwt', response.data.token);
     
           alert(response.data.msg);
-    
-          // Extract the user ID from the response data
-          const user = response.data.user; // Adjust this based on your response structure
-          const userId = response.data.userid; // Adjust this based on your response structure
-          // Set the user ID in cookies or local storage for future use
-          await $cookies.set('user', user);
-          await $cookies.set('useId', userId);
+
+          const [{ userid }] = response.data;
+// Adjust this based on your response structure
+
+          await $cookies.set('userid', userid);
+          console.log('userId set in cookies:', user);
           
-    
-          // Navigate to the appropriate route based on the user role or any other condition
-          // For example:
           if (response.data.user.role === 'admin') {
             await router.push('/admin');
           } else {

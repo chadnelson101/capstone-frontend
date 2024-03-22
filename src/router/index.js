@@ -6,6 +6,7 @@ import LoginView from '../views/LoginView.vue'
 import SocialsView from '../views/Socials.View.vue'
 import ProfileView from '../views/ProfileView.vue'
 import CartView from '../views/CartView.vue'
+import ContactView from '../views/ContactView.vue'
 
 const routes = [
   {
@@ -50,6 +51,11 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: CartView
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView
   }
 ]
 

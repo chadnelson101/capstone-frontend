@@ -9,32 +9,20 @@
       </div>
       <div class="card mb-3" v-for="social in socials" :key="social.id">
         <div class="card-body">
+          <img class="why" src="http://upload.wikimedia.org/wikipedia/commons/1/19/Lamborghini_Aventador.jpg" alt="">
+          <p class="time">{{ social.created_at }}</p>
           <p>{{ social.text }}</p>
-          <box-icon name='trash' @click="deletePost(social.postid)"></box-icon>
-          <!-- Button to open the modal -->
-          <box-icon name='edit-alt' type="button" data-bs-toggle="modal" :data-bs-target="'#editModal' + social.id"></box-icon>
-          <!-- Edit Post Modal -->
-          <div class="modal fade" :id="'editModal' + social.id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="mb-3">
-                    <input type="text" placeholder="Text" id="editText" class="form-control" v-model="editText">
-                  </div>
-                  <div class="mb-3">
-                    <input type="text" placeholder="URL" id="editPostimg" class="form-control" v-model="editPostimg">
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <!-- Button to trigger the updatePost method -->
-                  <button type="button" class="btn btn-primary" @click="editPost(social.postid)">Save changes</button>
-                </div>
-              </div>
-            </div>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <box-icon name='ellipsis-horizontal'></box-icon>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li>
+                <a class="dropdown-item" @click="deletePost(social.postid)">
+                  <box-icon name='trash'></box-icon> Delete
+                </a>
+              </li>
+            </ul>
           </div>
           <img v-if="social.postimg" :src="social.postimg" alt="Post Image" class="img-fluid">
         </div>
@@ -61,25 +49,14 @@ export default {
   methods: {
     addPost() {
       this.$store.dispatch('addPost', { text: this.text, postimg: this.postimg });
-      // Reset the form after adding the post
       this.text = '';
       this.postimg = '';
     },
     deletePost(postid) {
       this.$store.dispatch('deletePost', postid);
     },
-    // Method to open the modal and set the editing values
-    editPost(postid) {
-      const post = this.socials.find(post => post.id === postid);
-      if (post) {
-        this.editText = post.text;
-        this.editPostimg = post.postimg;
-      }
-    },
-    // Method to update the post
     updatePost(postid) {
       this.$store.dispatch('editPost', { id: postid, text: this.editText, postimg: this.editPostimg });
-      // Reset editing variables
       this.editText = '';
       this.editPostimg = '';
     }
@@ -95,18 +72,66 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 20px;
-  background-color: #4e4747;
+  background-color: #f8f9fa;
 }
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .post-form textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #231c1c;
+  border: 1px solid #ced4da;
   border-radius: 10px;
   resize: vertical;
 }
-img{
-  width: 700px;
+
+.card {
+  margin-bottom: 20px;
+}
+.card p{
+  margin-top: 5%;
+}
+
+.card-body {
+  position: relative;
+  padding: 20px;
+}
+
+.card-body p {
+  margin-bottom: 5px;
+}
+
+.card img {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.modal-dialog {
+  max-width: 500px;
+}
+.dropdown{
+  position: relative;
+  left: 48%;
+  bottom: 10vh;
+}
+.card .why {
+  width: 10%;
+  margin-top: 10px;
+  border-radius: 100%; /* Make the image round */
+  position: relative;
+  right: 40%;
+}
+.card .time{
+  position: relative;
+  right: 30%;
+  bottom: 5vh;
+}
+@media (max-width: 767px) {
+  .card img {
+    width: 100%;
+  }
 }
 </style>
-
-type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#editModal' + social.id"

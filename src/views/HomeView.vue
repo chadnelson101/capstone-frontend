@@ -56,10 +56,7 @@ export default {
         content: "FERRARI";
     }
     61%,80%{
-        content: "POLO";
-    }
-    81%,100%{
-        content: "RANGE ROVER";
+        content: "	Mercedes-Benz";
     }
 }
 

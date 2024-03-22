@@ -1,6 +1,6 @@
 <template>
 	<div>
-	<img src="https://img.gta5-mods.com/q95/images/bmw-m4-gts-liberty-walk/cdd8ce-20211226231806_1.jpg" alt="">
+	<img src="http://performancedrive.com.au/wp-content/uploads/2015/01/BMW-M4-Concept-Iconic-Lights-laser-headlights.jpg" alt="">
 </div>
 	<div>
 		<div class="wrapper">
@@ -64,7 +64,9 @@
 		height: 100vh;
 	} */
 	img{
-		width: 100%
+		width: 100%;
+		min-height:100vh;
+		
 	}
 	.flip-card_inner{
 		position: relative;

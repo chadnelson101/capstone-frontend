@@ -19,18 +19,8 @@
           <li class="nav-item">
             <router-link to="/socials" class="nav-link">Socials</router-link>
           </li>
-          <li class="nav-item dropdown">
-            <router-link to="/models" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Models</router-link>  
-            <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="/models">All Models</a></li>
-              <li><a class="dropdown-item" href="/models">Bmw</a></li>
-              <li><a class="dropdown-item" href="#">Polo</a></li>
-              <li><a class="dropdown-item" href="#">Ferrari</a></li>
-              <li><a class="dropdown-item" href="#">Range Rover</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-            </ul>
+          <li class="nav-item">
+            <router-link to="/models" class="nav-link">Models</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/cart" class="nav-link">Cart</router-link>  

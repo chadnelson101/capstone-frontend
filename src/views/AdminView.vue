@@ -1,6 +1,7 @@
 <template>
-    <div class="adminpage">
-      <h3 class="header">Products</h3>
+  <div class="adminpage">
+    <h3 class="header">Products</h3>
+    <div class="table-responsive">
       <table>
         <thead>
           <tr>
@@ -25,10 +26,12 @@
           </tr>
         </tbody>
       </table>
-      <br><br>
-      <ProductView/>
-      <br><br><br><br><br>
-      <h3 class="header">Users</h3>
+    </div>
+    <br><br>
+    <ProductView/>
+    <br><br><br><br><br>
+    <h3 class="header">Users</h3>
+    <div class="table-responsive">
       <table>
         <thead>
           <tr>
@@ -43,98 +46,52 @@
             <th></th>
           </tr>
         </thead>
-        <tbody v-for="users in user" :key="users.id">
+        <tbody v-for="user in users" :key="user.id">
           <tr>
-            <td class="word">{{ users.userid }}</td>
-            <td class="word">{{ users.firstname }}</td>
-            <td class="word">{{ users.lastname }}</td>
-            <td class="word">{{ users.age }}</td>
-            <td class="word">{{ users.gender }}</td>
-            <td class="word">{{ users.email}}</td>
-            <td class="word">{{ users.role }}</td>
-            <td><button @click="deleteUser(users.userid)" class="btn btn-primary">Delete</button></td>
+            <td class="word">{{ user.userid }}</td>
+            <td class="word">{{ user.firstname }}</td>
+            <td class="word">{{ user.lastname }}</td>
+            <td class="word">{{ user.age }}</td>
+            <td class="word">{{ user.gender }}</td>
+            <td class="word">{{ user.email}}</td>
+            <td class="word">{{ user.role }}</td>
+            <td><button @click="deleteUser(user.userid)" class="btn btn-primary">Delete</button></td>
             <td><editUserView/></td>
           </tr>
         </tbody>
       </table>
-      <br><br>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Add User
-</button>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-        <input type="text" placeholder="firstname" data-name name="item name" id="item name" v-model="firstname">
-      </div>
-      <div class="mb-3">
-        <input type="text" placeholder="lastname"  data-description name="item name" id="item name" v-model="lastname">
-      </div>
-      <div class="mb-3">
-        <input type="number" placeholder="age"  data-amount name="item name" id="item name" v-model="age">
-      </div>
-      <div class="mb-3">
-        <input type="text" placeholder="gender"  data-category name="item name" id="item name" v-model="gender">
-      </div>
-        <div class="mb-3">
-        <input type="text" placeholder="email"  data-details name="item name" id="item name" v-model="email">
-      </div>
-      <div class="mb-3">
-        <input type="text" placeholder="role" data-url name="item name" id="item name" v-model="role">
-      </div>
-      <div class="mb-3">
-        <input type="text" placeholder="password"  data-url name="item name" id="item name" v-model="password">
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" @click="addUser">Save changes</button>
-      </div>
     </div>
+    <br><br>
+    <div class="add-btn">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add User</button>
+    </div>
+    <!-- Modal -->
+    <!-- Your Modal Content -->
   </div>
-</div>
-    </div>
-  </template>
-  
-  <script>
-  import ProductView from '../components/ProductView.vue';
-  import editProductView from '../components/editProductView.vue';
-  import editUserView from '../components/editUserView.vue';
+</template>
+
+<script>
+import ProductView from '../components/ProductView.vue';
+import editProductView from '../components/editProductView.vue';
+import editUserView from '../components/editUserView.vue';
+
 export default {
-  components:{
+  components: {
     ProductView,
     editProductView,
     editUserView
   },
   data() {
     return {
-      firstname:null,
-      lastname:null,
-      age:null,
-      gender:null,
-      email:null,
-      role:null,
-      password:null,
+      // Your data properties
     };
   },
   computed: {
     products() {
       return this.$store.state.products;
     },
-    user() {
+    users() {
       return this.$store.state.users;
-    },
-    addUser(){
-      this.$store.dispatch('addUser',this.$data);
-    },
-    editUser() {
-      this.$store.dispatch('editUser',this.$data);
     }
   },
   mounted() {
@@ -143,55 +100,72 @@ export default {
   },
   methods: {
     deleteProduct(prodid) {
-          this.$store.dispatch('deleteProduct',prodid);
-        },
-        deleteUser(userid) {
-          this.$store.dispatch('deleteUser',userid);
-        },
-      }
+      this.$store.dispatch('deleteProduct', prodid);
+    },
+    deleteUser(userid) {
+      this.$store.dispatch('deleteUser', userid);
+    }
   }
+}
 </script>
-  
-  <style scoped>
+
+<style scoped>
+.adminpage {
+  padding: 20px;
+  background-color: rgb(72, 73, 73);
+}
+
+.header {
+  color: aqua;
+  font-size: 24px;
+}
+
+.ding {
+  color: black;
+}
+
+.word {
+  color: aliceblue;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid rgb(244, 240, 240);
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+img {
+  max-width: 100px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.add-btn {
+  text-align: center;
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 768px) {
   .adminpage {
-    padding: 100px;
-    background-color: rgb(72, 73, 73);
+    padding: 10px;
   }
-
-  .header{
-    color: aqua;
-    font-size: 50px;
+  .header {
+    font-size: 20px;
   }
-
-  .ding{
-    color: black;
+  .table-responsive{
+    width: 50%;
   }
-  .word{
-    color: aliceblue;
-  }
-  
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  th,
-  td {
-    border: 1px solid rgb(244, 240, 240);
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  img {
-    width: 100px;
-  }
-  .add-btn{
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-  }
-  </style>
+}
+</style>
