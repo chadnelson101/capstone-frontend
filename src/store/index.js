@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 import {$Cookies} from 'vue-cookies'
 
-const baseUrl = 'http://localhost:9000'
+const baseUrl = 'https://cap-backend-1.onrender.com'
 
 export default createStore({
   state: {
