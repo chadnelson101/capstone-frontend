@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 import {$Cookies} from 'vue-cookies'
 
-const baseUrl = 'https://capstone-backend-3.onrender.com'
+const baseUrl = 'https://cap-backend-1.onrender.com'
 
 export default createStore({
   state: {
@@ -190,20 +190,27 @@ export default createStore({
           alert(response.data.msg);
     
           // Extract the user ID from the response data
-          const userid = response.data.user;
-    
+          const user = response.data.user; // Adjust this based on your response structure
+          const userId = response.data.userid; // Adjust this based on your response structure
           // Set the user ID in cookies or local storage for future use
-          await $cookies.set('userid', userid);
+          await $cookies.set('user', user);
+          await $cookies.set('useId', userId);
+          
     
-          await router.push('/users');
-    
+          // Navigate to the appropriate route based on the user role or any other condition
+          // For example:
+          if (response.data.user.role === 'admin') {
+            await router.push('/admin');
+          } else {
+            await router.push('/users');
+          }
         } else {
           alert('Login failed. Please try again.');
         }
       } catch (error) {
         console.error('Error during login:', error);
       }
-    },
+    },    
     async logout ({context}){
       let $Cookies = $Cookies.keys()
       $Cookies.remove('jwt')
